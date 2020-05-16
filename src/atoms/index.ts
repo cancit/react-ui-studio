@@ -1,0 +1,34 @@
+import { atom, selector } from "recoil";
+import { StudioElement, StudioHierarchy, StudioElementMap } from "../types";
+export const activeElementIDState = atom({
+  key: "activeElementIDState",
+  default: "root",
+});
+export const elementsState = atom({
+  key: "elementsState",
+  default: {
+    root: {
+      component: "View",
+      id: "root",
+      name: "Root",
+      style: {
+        flex: 1,
+        height: "100%",
+      },
+    },
+  } as StudioElementMap,
+});
+
+export const elementsHierarchyState = atom({
+  key: "elementsHierarchyState",
+  default: [{ id: "root", children: [] }] as StudioHierarchy[],
+});
+
+export const activeElementState = selector({
+  key: "activeElementState",
+  get: ({ get }: { get: any }) => {
+    const id = get(activeElementIDState);
+    const list = get(elementsState);
+    return list[id];
+  },
+});
