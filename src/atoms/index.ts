@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import { StudioElement, StudioHierarchy, StudioElementMap } from "../types";
+import { StudioElement, StudioElementMap } from "../types";
 export const activeElementIDState = atom({
   key: "activeElementIDState",
   default: "root",
@@ -19,11 +19,6 @@ export const elementsState = atom({
   } as StudioElementMap,
 });
 
-export const elementsHierarchyState = atom({
-  key: "elementsHierarchyState",
-  default: [{ id: "root", children: [] }] as StudioHierarchy[],
-});
-
 export const activeElementState = selector({
   key: "activeElementState",
   get: ({ get }: { get: any }) => {
@@ -31,4 +26,9 @@ export const activeElementState = selector({
     const list = get(elementsState);
     return list[id];
   },
+});
+
+export const refStore = atom({
+  key: "refStore",
+  default: {},
 });

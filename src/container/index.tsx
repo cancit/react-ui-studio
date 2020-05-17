@@ -2,44 +2,32 @@ import * as React from "react";
 import { Device } from "./device";
 import { uuidv4 } from "../util";
 import { useRecoilState } from "recoil";
-import {
-  activeElementIDState,
-  elementsState,
-  elementsHierarchyState,
-} from "../atoms";
+import { activeElementIDState, elementsState } from "../atoms";
 import _ from "lodash";
-import { StudioElement, StudioHierarchy, StudioElementMap } from "../types";
+import { StudioElement, StudioElementMap } from "../types";
 export function Container() {
-  const [hierarchy, setHierarchy] = useRecoilState(elementsHierarchyState);
-
   const [elements, setElements] = useRecoilState(elementsState);
   const [activeElementId, setActiveElementID] = useRecoilState(
     activeElementIDState
   );
+  const [zoom, setZoom] = React.useState(0.8);
+  const [dimensions, setDimensions] = React.useState({
+    width: 375,
+    height: 812,
+  });
+
   const addElement = (newElement: StudioElement) => {
     setElements((elements: StudioElementMap) => {
-      const elems = _.cloneDeep(elements);
-      if (!elems[activeElementId].children) {
-        elems[activeElementId].children = [newElement.id];
-      } else {
-        elems[activeElementId].children!.push(newElement.id);
-      }
-      elems[newElement.id] = newElement;
-      console.log("elements", elems);
-      return elems;
-    });
-    setHierarchy((hierarchy: StudioHierarchy[]) => {
-      let elems = _.cloneDeep(hierarchy).map((a: any) => {
-        if (a.id === activeElementId) {
-          if (!a.children) {
-            a.children = [];
-          }
-          a.children.push(newElement.id);
-        }
-        return a;
-      });
-      console.log("hierarchy", elems);
-      return elems;
+      return {
+        ...elements,
+        [activeElementId]: {
+          ...elements[activeElementId],
+          children: [
+            ...(elements[activeElementId].children || []).concat(newElement.id),
+          ],
+        },
+        [newElement.id]: newElement,
+      };
     });
   };
   return (
@@ -110,7 +98,11 @@ export function Container() {
               component: "Image",
               id: uuidv4(),
               text: "Text",
-              style: {},
+              props: {
+                source:
+                  "https://media-exp1.licdn.com/dms/image/C4E03AQECzOkRLMF1Vg/profile-displayphoto-shrink_400_400/0?e=1594857600&v=beta&t=ACeq2JlNFJ3y7Nxu7ZHKcIhWzNTtHQnL_DBZW6Sw59c",
+              },
+              style: { width: 100, height: 100 },
             } as StudioElement;
             addElement(newElement);
           }}
@@ -125,19 +117,61 @@ export function Container() {
         >
           + Image
         </button>
+        <div style={{ display: "flex" }} />
+        <span style={{ marginLeft: 12 }}>Zoom</span>
+        <input
+          style={{ marginLeft: 12 }}
+          type={"number"}
+          defaultValue={zoom * 100}
+          onChange={(event) => {
+            setZoom(parseInt(event.target.value) / 100);
+          }}
+        />
+        <button
+          onClick={() => {
+            setDimensions((dm) => {
+              return { width: dm.height, height: dm.width };
+            });
+          }}
+          style={{
+            backgroundColor: "black",
+            border: "none",
+            color: "white",
+            fontSize: 18,
+            borderRadius: 4,
+            marginLeft: 12,
+          }}
+        >
+          Rotate
+        </button>
       </div>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          overflow: "scroll",
-          justifyContent: "center",
           backgroundColor: "#424e5059",
-          paddingTop: 48,
-          flex: 1,
+          position: "relative",
+          overflow: "scroll",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          // minHeight: zoom * dimensions.height + 48,
         }}
       >
-        <Device />
+        {/*  <div
+          style={{ transform: `scale(${zoom})`, paddingTop: 0, margin: "auto" }}
+        > */}
+        <div
+          style={
+            {
+              /*    width: dimensions.width * zoom,
+            height: dimensions.height * zoom,
+            margin: "auto", */
+            }
+          }
+        >
+          <Device zoom={zoom} dimensions={dimensions} />
+        </div>
+        {/*   </div> */}
       </div>
     </div>
   );

@@ -1,6 +1,10 @@
 import * as React from "react";
 import { FieldEditor } from "./components/fieldEditor";
-import { elementsState, activeElementState } from "../atoms";
+import {
+  elementsState,
+  activeElementState,
+  activeElementIDState,
+} from "../atoms";
 import { useRecoilValue, useRecoilState } from "recoil";
 import {
   StyleFlexDirection,
@@ -11,6 +15,10 @@ import {
 import _ from "lodash";
 export function ViewEditor() {
   const [elements, setElements] = useRecoilState(elementsState);
+  const [activeElementId, setActiveElementId] = useRecoilState(
+    activeElementIDState
+  );
+
   const activeElement = useRecoilValue(activeElementState);
   return (
     <>
@@ -74,14 +82,28 @@ export function ViewEditor() {
         activeElement={activeElement}
         setElements={setElements}
       />
-      <FieldEditor
-        title="Width"
-        field="style.width"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-
+      <div>
+        <FieldEditor
+          title="Width"
+          field="style.width"
+          type="number"
+          activeElement={activeElement}
+          setElements={setElements}
+        />
+        <button
+          onClick={() => {
+            setElements((elements: any) => {
+              const elems = _.cloneDeep(elements);
+              const old = elems[activeElement.id];
+              _.set(old, "style.width", undefined);
+              elems[activeElement.id] = old;
+              return elems;
+            });
+          }}
+        >
+          -
+        </button>
+      </div>
       <div>
         <FieldEditor
           title="Height"
@@ -104,6 +126,57 @@ export function ViewEditor() {
           -
         </button>
       </div>
+      <FieldEditor
+        title="MarginLeft"
+        field="style.marginLeft"
+        type="number"
+        activeElement={activeElement}
+        setElements={setElements}
+      />
+      <FieldEditor
+        title="Margin Right"
+        field="style.marginRight"
+        type="number"
+        activeElement={activeElement}
+        setElements={setElements}
+      />
+      <FieldEditor
+        title="Margin Top"
+        field="style.marginTop"
+        type="number"
+        activeElement={activeElement}
+        setElements={setElements}
+      />
+      <FieldEditor
+        title="Margin Bottom"
+        field="style.marginBottom"
+        type="number"
+        activeElement={activeElement}
+        setElements={setElements}
+      />
+      <button
+        style={{ alignSelf: "flex-start", marginTop: 24 }}
+        onClick={() => {
+          setElements((elements: any) => {
+            const currentID = activeElement.id;
+            const elems = _.cloneDeep(elements);
+            const parent = Object.keys(elems).find((comp) => {
+              return elems[comp].children?.indexOf(activeElement.id) > -1;
+            })!;
+            elems[parent] = {
+              ...elems[parent],
+              children: elems[parent].children.filter(
+                (f: string) => f !== currentID
+              ),
+            };
+            delete elems[currentID];
+            setActiveElementId(parent);
+            return elems;
+          });
+        }}
+      >
+        Delete Component
+      </button>
       {
         <span style={{ marginTop: 24 }}>
           {JSON.stringify(activeElement, null, 4)}

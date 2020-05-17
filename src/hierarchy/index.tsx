@@ -1,22 +1,40 @@
 import * as React from "react";
 import { useRecoilState } from "recoil";
-import {
-  elementsState,
-  activeElementIDState,
-  elementsHierarchyState,
-} from "../atoms";
-import { StudioElement, StudioElementMap, StudioHierarchy } from "../types";
+import { elementsState, activeElementIDState } from "../atoms";
+import { StudioElementMap } from "../types";
 import { TouchableOpacity, Text } from "react-native";
 export function Hierarchy() {
-  const [elements /* setElements */] = useRecoilState(elementsState);
-  const [hierarchy] = useRecoilState(elementsHierarchyState);
-
+  const [elements, setElements] = useRecoilState(elementsState);
   const [activeElementId, setActiveElementID] = useRecoilState(
     activeElementIDState
   );
   return (
     <div style={{ padding: 8, display: "flex", flexDirection: "column" }}>
-      <span style={{ marginBottom: 4 }}>Hierarchy</span>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <span style={{ marginBottom: 4, flex: 1 }}>Hierarchy</span>
+        <button
+          onClick={() => {
+            const saved = JSON.parse(
+              window.localStorage.getItem("savedElements") || ""
+            );
+            setElements(saved);
+          }}
+        >
+          load
+        </button>
+        <button
+          onClick={() => {
+            window.localStorage.setItem(
+              "savedElements",
+              JSON.stringify(elements)
+            );
+
+            alert("Saved");
+          }}
+        >
+          save
+        </button>
+      </div>
       <div
         style={{
           width: "100%",
@@ -26,15 +44,14 @@ export function Hierarchy() {
           marginBottom: 12,
         }}
       />
-      {hierarchy.map((e: StudioHierarchy) => (
-        <RowElement
-          level={0}
-          elementId={e.id}
-          activeElementId={activeElementId}
-          setActiveElementID={setActiveElementID}
-          elements={elements}
-        />
-      ))}
+      <RowElement
+        key={"root"}
+        level={0}
+        elementId={"root"}
+        activeElementId={activeElementId}
+        setActiveElementID={setActiveElementID}
+        elements={elements}
+      />
     </div>
   );
 }
@@ -46,6 +63,7 @@ function RowElement(props: {
   elements: StudioElementMap;
 }) {
   const e = props.elements[props.elementId];
+  console.log("rowElement", props.elementId);
   return (
     <div key={e.id} style={{ paddingLeft: props.level > 0 ? 12 : 0 }}>
       <div
@@ -79,6 +97,7 @@ function RowElement(props: {
       {e.children &&
         e.children.map((a) => (
           <RowElement
+            key={a}
             level={props.level + 1}
             elementId={a}
             activeElementId={props.activeElementId}

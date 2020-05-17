@@ -45,11 +45,13 @@ export interface StudioElement {
     justifyContent?: StyleJustifyContent;
     alignSelf?: StyleAlignSelf;
     borderRadius?: number;
+    marginLeft?: number;
+    marginRight?: number;
+    marginTop?: number;
+    marginBottom?: number;
+    color?: string;
+    fontSize?: number;
   };
-  children?: string[];
-}
-export interface StudioHierarchy {
-  id: string;
   children?: string[];
 }
 

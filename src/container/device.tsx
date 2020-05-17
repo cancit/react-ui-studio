@@ -1,38 +1,79 @@
 import * as React from "react";
 import { useRecoilState } from "recoil";
-import {
-  activeElementIDState,
-  elementsState,
-  elementsHierarchyState,
-} from "../atoms";
+import { activeElementIDState, elementsState, refStore } from "../atoms";
 import { StudioElement, StudioElementMap } from "../types";
 import { View, Text, Image } from "react-native";
-export function Device(props: {}) {
+import _ from "lodash";
+const _refs = {} as any;
+export function Device(props: {
+  zoom: number;
+  dimensions: { width: number; height: number };
+}) {
   const [activeElementId, setActiveElementID] = useRecoilState(
     activeElementIDState
   );
-  const [elements /* setElements */] = useRecoilState(elementsState);
-  const [hierarchy /* setElements */] = useRecoilState(elementsHierarchyState);
+  const [elements, setElements] = useRecoilState(elementsState);
 
+  const [refs, setRefs] = useRecoilState(refStore);
+  const [pos, setPos] = React.useState({ x: 0, y: 0, w: 0, h: 0 });
+  const [parentPos, setParentPos] = React.useState({ x: 0, y: 0, w: 0, h: 0 });
+  const parentRef = React.useRef<View>();
+
+  React.useEffect(() => {
+    if (_refs[activeElementId] && _refs[activeElementId].measureInWindow) {
+      parentRef.current!.measureInWindow(
+        (x: number, y: number, w: number, h: number) => {
+          setParentPos({ x, y, w, h });
+        }
+      );
+      _refs[activeElementId].measureInWindow(
+        (x: number, y: number, w: number, h: number) => {
+          console.log("ref measuered");
+          setPos({ x, y, w, h });
+        }
+      );
+    }
+  }, [activeElementId, elements, props.dimensions]);
+  const { width, height } = props.dimensions;
   return (
-    <div
-      style={{
-        width: 375,
-        height: 812,
-        transform: "scale(0.8)",
-        borderRadius: 4,
-        backgroundColor: "white",
-        color: "black",
-        flexDirection: "row",
-        overflow: "scroll",
-        display: "flex",
-        alignContent: "flex-start",
-      }}
-    >
-      {hierarchy.map((e: any, i: number) => {
-        return <Component elementID={e.id} index={i} elements={elements} />;
-      })}
-    </div>
+    <>
+      <div style={{ width, height, transform: `scale(${props.zoom})` }}>
+        <View
+          ref={parentRef as any}
+          style={{
+            // transform: "scale(0.8)",
+            width,
+            height,
+            borderRadius: 4,
+            backgroundColor: "white",
+            flexDirection: "row",
+            overflow: "scroll",
+            display: "flex",
+            alignContent: "flex-start",
+            position: "relative",
+          }}
+        >
+          <Component elementID={"root"} index={0} elements={elements} />
+
+          {pos.w > 0 && pos.h > 0 && (
+            <div
+              style={{
+                position: "absolute",
+                borderColor: "#00adfe",
+                opacity: 0.8,
+                borderWidth: 4,
+                borderStyle: "solid",
+                left: (pos.x - parentPos.x) / props.zoom,
+                top: (pos.y - parentPos.y) / props.zoom,
+                width: pos.w - 8,
+                height: pos.h - 8,
+                pointerEvents: "none",
+              }}
+            ></div>
+          )}
+        </View>
+      </div>
+    </>
   );
 }
 function Component(props: {
@@ -41,33 +82,21 @@ function Component(props: {
   elements: StudioElementMap;
 }) {
   const e = props.elements[props.elementID];
+  const mouse = {
+    onMouseMove: () => {
+      console.log("mouse move!");
+    },
+  };
+  const [activeElementId, setActiveElementID] = useRecoilState(
+    activeElementIDState
+  );
   if (e.component === "View") {
     return (
       <>
-        {/*        <View
-          style={{
-            backgroundColor: e.style?.backgroundColor,
-            width: "100%",
-            height: "100%",
-            flexDirection: e.style?.flexDirection,
-            alignItems: e.style?.alignItems,
-            justifyContent: e.style?.justifyContent,
-            borderRadius: e.style?.borderRadius,
-            flex: e.style?.flex,
-            position: "absolute",
-            borderStyle: "solid",
-            borderColor: "red",
-            borderWidth: 2,
-          }}
-        /> */}
         <View
-          onLayout={(e) => {
-            console.log("onLayout", e);
-          }}
           ref={(r) => {
-            r?.measureInWindow((x, y, w, h) => {
-              console.log("measureInWindow", x, y, w, h);
-            });
+            _refs[e.id] = r;
+            // setRefs();
           }}
           style={{
             backgroundColor: e.style?.backgroundColor,
@@ -77,10 +106,29 @@ function Component(props: {
             alignItems: e.style?.alignItems,
             justifyContent: e.style?.justifyContent,
             borderRadius: e.style?.borderRadius,
+            marginLeft: e.style?.marginLeft,
+            marginRight: e.style?.marginRight,
+            marginTop: e.style?.marginTop,
+            marginBottom: e.style?.marginBottom,
             flex: e.style?.flex,
             position: "relative",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              right: 0,
+              bottom: 0,
+            }}
+            onMouseDown={() => {
+              console.log("onMouseMove");
+              if (activeElementId !== e.id) {
+                setActiveElementID(e.id);
+              }
+            }}
+          />
           {
             e.children
               ? e.children.map((a, i) => (
@@ -99,6 +147,10 @@ function Component(props: {
   } else if (e.component === "Text") {
     return (
       <Text
+        ref={(r) => {
+          _refs[e.id] = r;
+          // setRefs();
+        }}
         style={{
           backgroundColor: e.style?.backgroundColor,
           width: e.style?.width,
@@ -108,10 +160,31 @@ function Component(props: {
           alignSelf: e.style?.alignSelf,
           justifyContent: e.style?.justifyContent,
           borderRadius: e.style?.borderRadius,
+          marginLeft: e.style?.marginLeft,
+          marginRight: e.style?.marginRight,
+          marginTop: e.style?.marginTop,
+          marginBottom: e.style?.marginBottom,
+          color: e.style?.color,
+          fontSize: e.style?.fontSize,
           flex: e.style?.flex,
           position: "relative",
         }}
       >
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+          }}
+          onMouseDown={() => {
+            console.log("onMouseMove");
+            if (activeElementId !== e.id) {
+              setActiveElementID(e.id);
+            }
+          }}
+        />
         {e.children ? (
           e.children.map((a, i) => (
             <Component elementID={a} index={i} elements={props.elements} />
@@ -125,6 +198,9 @@ function Component(props: {
     return (
       <>
         <Image
+          ref={(r) => {
+            _refs[e.id] = r;
+          }}
           source={{ uri: e.props?.source || "" }}
           style={{
             backgroundColor: e.style?.backgroundColor,
@@ -134,6 +210,10 @@ function Component(props: {
             alignItems: e.style?.alignItems,
             justifyContent: e.style?.justifyContent,
             borderRadius: e.style?.borderRadius,
+            marginLeft: e.style?.marginLeft,
+            marginRight: e.style?.marginRight,
+            marginTop: e.style?.marginTop,
+            marginBottom: e.style?.marginBottom,
             flex: e.style?.flex,
             position: "relative",
           }}
