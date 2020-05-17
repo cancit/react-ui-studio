@@ -104,6 +104,7 @@ function Component(props: {
             height: e.style?.height,
             flexDirection: e.style?.flexDirection,
             alignItems: e.style?.alignItems,
+            alignSelf: e.style?.alignSelf,
             justifyContent: e.style?.justifyContent,
             borderRadius: e.style?.borderRadius,
             marginLeft: e.style?.marginLeft,
