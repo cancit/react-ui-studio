@@ -32,7 +32,15 @@ function App() {
         >
           <Container />
         </div>
-        <div style={{ width: 300, backgroundColor: "#282c34" }}>
+        <div
+          style={{
+            width: 300,
+            backgroundColor: "#282c34",
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+          }}
+        >
           <Editor />
         </div>
       </div>

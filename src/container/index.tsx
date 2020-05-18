@@ -5,6 +5,25 @@ import { useRecoilState } from "recoil";
 import { activeElementIDState, elementsState } from "../atoms";
 import _ from "lodash";
 import { StudioElement, StudioElementMap } from "../types";
+const devices = [
+  {
+    name: "iPhone 8",
+    width: 414,
+    height: 736,
+  },
+  {
+    name: "iPhone X",
+    width: 375,
+    height: 812,
+  },
+  {
+    name: "iPad",
+    width: 768,
+    height: 1024,
+  },
+];
+var ws = new WebSocket("ws://192.168.1.21:8080");
+
 export function Container() {
   const [elements, setElements] = useRecoilState(elementsState);
   const [activeElementId, setActiveElementID] = useRecoilState(
@@ -15,7 +34,22 @@ export function Container() {
     width: 375,
     height: 812,
   });
-
+  React.useEffect(() => {
+    ws.onopen = () => {
+      const message = "hello";
+      ws.send("web");
+      //   console.log(`Sent: ${message}`);
+    };
+    ws.onmessage = (e) => {
+      console.log(`Received: ${e.data}`);
+    };
+    ws.onerror = (e: any) => {
+      console.log(`Error: ${e.message}`);
+    };
+    ws.onclose = (e) => {
+      console.log(e.code, e.reason);
+    };
+  }, []);
   const addElement = (newElement: StudioElement) => {
     setElements((elements: StudioElementMap) => {
       return {
@@ -30,6 +64,15 @@ export function Container() {
       };
     });
   };
+  React.useEffect(() => {
+    const listener = () => {
+      setZoom((window.innerHeight / dimensions.height) * 0.9);
+    };
+    window.addEventListener("resize", listener);
+    return () => {
+      window.removeEventListener("resize", listener);
+    };
+  }, []);
   return (
     <div
       style={{
@@ -45,7 +88,6 @@ export function Container() {
       <div
         style={{
           height: 40,
-          width: "100%",
           backgroundColor: "#282c34",
           display: "flex",
           paddingLeft: 8,
@@ -143,6 +185,37 @@ export function Container() {
           }}
         >
           Rotate
+        </button>
+        <select
+          style={{ marginLeft: 8 }}
+          onChange={(e) => {
+            const i = parseInt(e.target.value) || 0;
+            setDimensions({
+              height: devices[i].height,
+              width: devices[i].width,
+            });
+            setZoom((window.innerHeight / devices[i].height) * 0.9);
+          }}
+          defaultValue={1}
+        >
+          {devices.map((d, i) => (
+            <option value={i}>{d.name}</option>
+          ))}
+        </select>
+        <button
+          onClick={() => {
+            ws.send(JSON.stringify({ type: "ui", elements: elements }));
+          }}
+          style={{
+            backgroundColor: "black",
+            border: "none",
+            color: "white",
+            fontSize: 18,
+            borderRadius: 4,
+            marginLeft: 12,
+          }}
+        >
+          Preview
         </button>
       </div>
       <div

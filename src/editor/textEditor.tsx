@@ -41,7 +41,7 @@ export function TextEditor() {
       <FieldEditor
         title="Font Size"
         field="style.fontSize"
-        type="string"
+        type="number"
         activeElement={activeElement}
         setElements={setElements}
       />

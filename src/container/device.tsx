@@ -18,7 +18,6 @@ export function Device(props: {
   const [pos, setPos] = React.useState({ x: 0, y: 0, w: 0, h: 0 });
   const [parentPos, setParentPos] = React.useState({ x: 0, y: 0, w: 0, h: 0 });
   const parentRef = React.useRef<View>();
-
   React.useEffect(() => {
     if (_refs[activeElementId] && _refs[activeElementId].measureInWindow) {
       parentRef.current!.measureInWindow(
@@ -33,7 +32,7 @@ export function Device(props: {
         }
       );
     }
-  }, [activeElementId, elements, props.dimensions]);
+  }, [activeElementId, elements, props.dimensions, props.zoom]);
   const { width, height } = props.dimensions;
   return (
     <>
@@ -218,7 +217,23 @@ function Component(props: {
             flex: e.style?.flex,
             position: "relative",
           }}
-        ></Image>
+        >
+          {/*   <div
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              right: 0,
+              bottom: 0,
+            }}
+            onMouseDown={() => {
+              console.log("onMouseMove");
+              if (activeElementId !== e.id) {
+                setActiveElementID(e.id);
+              }
+            }}
+          /> */}
+        </Image>
       </>
     );
   }
