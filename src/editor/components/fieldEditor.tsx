@@ -20,7 +20,7 @@ export function FieldEditor(
 ) {
   return (
     <div style={{ display: "flex", flexDirection: "row", marginTop: 12 }}>
-      <span style={{ flex: 2, fontSize: 14 }}>{props.title}</span>
+      <span style={{ flex: 2, fontSize: 13 }}>{props.title}</span>
       {(props.type === "number" || props.type === "string") && (
         <String {...(props as any)} />
       )}
@@ -61,10 +61,11 @@ function TextEditor(props: {
     />
   );
 }
-function String(props: {
+export function String(props: {
   activeElement: any;
   field: string;
   type: "number" | "string";
+  style?: React.CSSProperties;
   setElements: (elements: any) => void;
 }) {
   const { activeElement, setElements, field, type } = props;
@@ -72,7 +73,7 @@ function String(props: {
     <input
       type={type}
       key={activeElement.id}
-      style={{ marginLeft: 12, flex: 3 }}
+      style={{ ...props.style, marginLeft: 12, flex: 3 }}
       defaultValue={_.get(activeElement, field)}
       onChange={(event) => {
         console.log(event.target.value);

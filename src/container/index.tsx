@@ -65,9 +65,9 @@ export function Container() {
     });
   };
   React.useEffect(() => {
-    setZoom((window.innerHeight / dimensions.height) * 0.9);
+    setZoom(Math.round((window.innerHeight / dimensions.height) * 90) / 100);
     const listener = () => {
-      setZoom((window.innerHeight / dimensions.height) * 0.9);
+      setZoom(Math.round((window.innerHeight / dimensions.height) * 90) / 100);
     };
     window.addEventListener("resize", listener);
     return () => {
@@ -166,9 +166,14 @@ export function Container() {
         <input
           style={{ marginLeft: 12 }}
           type={"number"}
+          value={zoom * 100}
           defaultValue={zoom * 100}
           onChange={(event) => {
-            setZoom(parseInt(event.target.value) / 100);
+            let val = Math.round(parseInt(event.target.value));
+            if (val > 200) {
+              val = 200;
+            }
+            setZoom(val / 100);
           }}
         />
         <button

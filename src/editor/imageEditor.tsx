@@ -6,13 +6,11 @@ import {
   activeElementIDState,
 } from "../atoms";
 import { useRecoilValue, useRecoilState } from "recoil";
-import {
-  StyleFlexDirection,
-  StyleJustifyContent,
-  StyleAlignItems,
-  StyleAlignSelf,
-} from "../types";
+import { StyleAlignSelf } from "../types";
 import _ from "lodash";
+import { Dimensions } from "./sections/dimensions";
+import { Margins } from "./sections/margins";
+import { Paddings } from "./sections/paddings";
 export function ImageEditor() {
   const [elements, setElements] = useRecoilState(elementsState);
   const activeElement = useRecoilValue(activeElementState);
@@ -43,30 +41,6 @@ export function ImageEditor() {
         setElements={setElements}
       />
       <FieldEditor
-        title="Flex Direction"
-        field="props.style.flexDirection"
-        type="select"
-        values={Object.keys(StyleFlexDirection)}
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Align Items"
-        field="props.style.alignItems"
-        type="select"
-        values={Object.keys(StyleAlignItems)}
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Justify Content"
-        field="props.style.justifyContent"
-        type="select"
-        values={Object.keys(StyleJustifyContent)}
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
         title="Align Self"
         field="props.style.alignSelf"
         type="select"
@@ -75,62 +49,22 @@ export function ImageEditor() {
         setElements={setElements}
       />
       <FieldEditor
-        title="Border Radius"
+        title="Radius"
         field="props.style.borderRadius"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
-        title="Background Color"
+        title="Fill"
         field="props.style.backgroundColor"
         type="string"
         activeElement={activeElement}
         setElements={setElements}
       />
-      <FieldEditor
-        title="Width"
-        field="props.style.width"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-
-      <FieldEditor
-        title="Height"
-        field="props.style.height"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="MarginLeft"
-        field="props.style.marginLeft"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Margin Right"
-        field="props.style.marginRight"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Margin Top"
-        field="props.style.marginTop"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Margin Bottom"
-        field="props.style.marginBottom"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
+      <Dimensions />
+      <Margins />
+      <Paddings />
       <button
         style={{ alignSelf: "flex-start", marginTop: 24 }}
         onClick={() => {

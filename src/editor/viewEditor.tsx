@@ -13,6 +13,10 @@ import {
   StyleAlignSelf,
 } from "../types";
 import _ from "lodash";
+import { Dimensions } from "./sections/dimensions";
+import { Margins } from "./sections/margins";
+import { Paddings } from "./sections/paddings";
+
 export function ViewEditor() {
   const [elements, setElements] = useRecoilState(elementsState);
   const [activeElementId, setActiveElementId] = useRecoilState(
@@ -69,111 +73,23 @@ export function ViewEditor() {
         setElements={setElements}
       />
       <FieldEditor
-        title="Border Radius"
+        title="Radius"
         field="props.style.borderRadius"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
-        title="Background Color"
+        title="Fill"
         field="props.style.backgroundColor"
         type="string"
         activeElement={activeElement}
         setElements={setElements}
       />
-      <div>
-        <FieldEditor
-          title="Width"
-          field="props.style.width"
-          type="number"
-          activeElement={activeElement}
-          setElements={setElements}
-        />
-        <button
-          onClick={() => {
-            setElements((elements: any) => {
-              const elems = _.cloneDeep(elements);
-              const old = elems[activeElement.id];
-              _.set(old, "props.style.width", undefined);
-              elems[activeElement.id] = old;
-              return elems;
-            });
-          }}
-        >
-          -
-        </button>
-      </div>
-      <div>
-        <FieldEditor
-          title="Height"
-          field="props.style.height"
-          type="number"
-          activeElement={activeElement}
-          setElements={setElements}
-        />
-        <button
-          onClick={() => {
-            setElements((elements: any) => {
-              const elems = _.cloneDeep(elements);
-              const old = elems[activeElement.id];
-              _.set(old, "props.style.height", undefined);
-              elems[activeElement.id] = old;
-              return elems;
-            });
-          }}
-        >
-          -
-        </button>
-      </div>
-      <FieldEditor
-        title="MarginLeft"
-        field="props.style.marginLeft"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Margin Right"
-        field="props.style.marginRight"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Margin Top"
-        field="props.style.marginTop"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Margin Bottom"
-        field="props.style.marginBottom"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <FieldEditor
-        title="Max Width"
-        field="props.style.maxWidth"
-        type="number"
-        activeElement={activeElement}
-        setElements={setElements}
-      />
-      <button
-        onClick={() => {
-          setElements((elements: any) => {
-            const elems = _.cloneDeep(elements);
-            const old = elems[activeElement.id];
-            _.set(old, "props.style.maxWidth", undefined);
-            elems[activeElement.id] = old;
-            return elems;
-          });
-        }}
-      >
-        -
-      </button>
+      <Dimensions />
+      <Margins />
+      <Paddings />
+
       <button
         style={{ alignSelf: "flex-start", marginTop: 24 }}
         onClick={() => {

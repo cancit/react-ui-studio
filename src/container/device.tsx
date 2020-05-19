@@ -292,13 +292,28 @@ function Component(props: {
   } else if (e.component === "Image") {
     return (
       <>
-        <Image
-          ref={(r) => {
-            _refs[e.id] = r;
-          }}
-          source={{ uri: e.props?.source || "" }}
+        <div
           style={{
-            /*           backgroundColor: e.props?.style?.backgroundColor,
+            position: "relative",
+            flexDirection: e.props?.style?.flexDirection,
+            alignItems: e.props?.style?.alignItems,
+            justifyContent: e.props?.style?.justifyContent,
+            alignSelf: e.props?.style?.justifyContent,
+          }}
+          onMouseDown={() => {
+            console.log("onMouseMove");
+            if (activeElementId !== e.id) {
+              setActiveElementID(e.id);
+            }
+          }}
+        >
+          <Image
+            ref={(r) => {
+              _refs[e.id] = r;
+            }}
+            source={{ uri: e.props?.source || "" }}
+            style={{
+              /*           backgroundColor: e.props?.style?.backgroundColor,
             width: e.props?.style?.width,
             height: e.props?.style?.height,
             flexDirection: e.props?.style?.flexDirection,
@@ -310,11 +325,11 @@ function Component(props: {
             marginTop: e.props?.style?.marginTop,
             marginBottom: e.props?.style?.marginBottom,
             flex: e.props?.style?.flex, */
-            position: "relative",
-            ...e.props?.style,
-          }}
-        >
-          {/*   <div
+              position: "relative",
+              ...e.props?.style,
+            }}
+          >
+            {/*   <div
             style={{
               position: "absolute",
               left: 0,
@@ -329,7 +344,8 @@ function Component(props: {
               }
             }}
           /> */}
-        </Image>
+          </Image>
+        </div>
       </>
     );
   }
