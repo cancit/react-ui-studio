@@ -65,6 +65,7 @@ export function Container() {
     });
   };
   React.useEffect(() => {
+    setZoom((window.innerHeight / dimensions.height) * 0.9);
     const listener = () => {
       setZoom((window.innerHeight / dimensions.height) * 0.9);
     };
@@ -99,7 +100,9 @@ export function Container() {
             const newElement = {
               component: "View",
               id: uuidv4(),
-              style: { height: 100, width: 100, backgroundColor: "gray" },
+              props: {
+                style: { height: 100, width: 100, backgroundColor: "gray" },
+              },
             } as StudioElement;
             addElement(newElement);
           }}
@@ -119,7 +122,6 @@ export function Container() {
               component: "Text",
               id: uuidv4(),
               text: "Text",
-              style: {},
             } as StudioElement;
             addElement(newElement);
           }}
@@ -141,10 +143,10 @@ export function Container() {
               id: uuidv4(),
               text: "Text",
               props: {
+                style: { width: 100, height: 100 },
                 source:
                   "https://media-exp1.licdn.com/dms/image/C4E03AQECzOkRLMF1Vg/profile-displayphoto-shrink_400_400/0?e=1594857600&v=beta&t=ACeq2JlNFJ3y7Nxu7ZHKcIhWzNTtHQnL_DBZW6Sw59c",
               },
-              style: { width: 100, height: 100 },
             } as StudioElement;
             addElement(newElement);
           }}
