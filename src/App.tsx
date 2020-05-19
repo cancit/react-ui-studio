@@ -4,6 +4,7 @@ import { Container } from "./container";
 import { Editor } from "./editor";
 import { Hierarchy } from "./hierarchy";
 import { RecoilRoot } from "recoil";
+import { CodeEditor } from "./code";
 
 function App() {
   return (
@@ -14,11 +15,22 @@ function App() {
           display: "flex",
           flexDirection: "row",
           height: "100vh",
+          maxHeight: "100vh",
           flex: 1,
         }}
       >
-        <div style={{ width: 300, backgroundColor: "#282c34" }}>
+        <div
+          style={{
+            width: 300,
+            height: "100%",
+            display: "flex",
+            backgroundColor: "#282c34",
+            flexDirection: "column",
+          }}
+        >
           <Hierarchy />
+          {/*           <CodeEditor />
+           */}
         </div>
         <div
           style={{
@@ -39,6 +51,7 @@ function App() {
             display: "flex",
             flexDirection: "column",
             height: "100%",
+            overflow: "scroll",
           }}
         >
           <Editor />
