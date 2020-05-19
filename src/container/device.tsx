@@ -36,39 +36,119 @@ export function Device(props: {
   const { width, height } = props.dimensions;
   return (
     <>
-      <div style={{ width, height, transform: `scale(${props.zoom})` }}>
+      <div
+        style={{
+          width,
+          height,
+          transform: `scale(${props.zoom})`,
+        }}
+      >
         <View
-          ref={parentRef as any}
           style={{
             // transform: "scale(0.8)",
-            width,
-            height,
+            width: width + 16,
+            height: height + 16,
             borderRadius: 4,
-            backgroundColor: "white",
             flexDirection: "row",
             overflow: "scroll",
             display: "flex",
             alignContent: "flex-start",
             position: "relative",
+            paddingLeft: 8,
+            paddingTop: 8,
           }}
         >
-          <Component elementID={"root"} index={0} elements={elements} />
-
+          <View
+            ref={parentRef as any}
+            style={{
+              // transform: "scale(0.8)",
+              width,
+              height,
+              backgroundColor: "white",
+              flexDirection: "row",
+              overflow: "scroll",
+              display: "flex",
+              alignContent: "flex-start",
+              position: "relative",
+            }}
+          >
+            <Component elementID={"root"} index={0} elements={elements} />
+          </View>
           {pos.w > 0 && pos.h > 0 && (
             <div
               style={{
                 position: "absolute",
-                borderColor: "#00adfe",
-                opacity: 0.8,
-                borderWidth: 4,
+                borderColor: "#4286f4",
+
+                borderWidth: 3,
                 borderStyle: "solid",
-                left: (pos.x - parentPos.x) / props.zoom,
-                top: (pos.y - parentPos.y) / props.zoom,
-                width: pos.w - 8,
-                height: pos.h - 8,
+                left: (pos.x - parentPos.x) / props.zoom + 5,
+                top: (pos.y - parentPos.y) / props.zoom + 5,
+                width: pos.w,
+                height: pos.h,
                 pointerEvents: "none",
+                overflow: "",
               }}
-            ></div>
+            >
+              <div
+                style={{
+                  borderRadius: "50%",
+                  width: 10,
+                  height: 10,
+                  background: "white",
+                  top: -8,
+                  left: -8,
+                  position: "absolute",
+                  border: "3px solid #4286f4",
+                  zIndex: 1000,
+                }}
+              />
+              <div
+                style={{
+                  borderRadius: "50%",
+                  width: 10,
+                  height: 10,
+                  background: "white",
+                  top: -8,
+                  right: -8,
+                  position: "absolute",
+                  border: "3px solid #4286f4",
+                  zIndex: 1000,
+                }}
+              />
+              <div
+                style={{
+                  borderRadius: "50%",
+                  width: 10,
+                  height: 10,
+                  background: "white",
+                  bottom: -8,
+                  right: -8,
+                  position: "absolute",
+                  border: "3px solid #4286f4",
+                  zIndex: 1000,
+                }}
+              />
+              <div
+                onMouseDown={() => {
+                  console.log("mouseDown");
+                }}
+                onMouseUp={() => {
+                  console.log("mouseUp");
+                }}
+                style={{
+                  borderRadius: "50%",
+                  width: 10,
+                  height: 10,
+                  background: "white",
+                  bottom: -8,
+                  left: -8,
+                  position: "absolute",
+                  border: "3px solid #4286f4",
+                  zIndex: 1000,
+                }}
+              />
+            </div>
           )}
         </View>
       </div>
@@ -98,20 +178,21 @@ function Component(props: {
             // setRefs();
           }}
           style={{
-            backgroundColor: e.style?.backgroundColor,
-            width: e.style?.width,
-            height: e.style?.height,
-            flexDirection: e.style?.flexDirection,
-            alignItems: e.style?.alignItems,
-            alignSelf: e.style?.alignSelf,
-            justifyContent: e.style?.justifyContent,
-            borderRadius: e.style?.borderRadius,
-            marginLeft: e.style?.marginLeft,
-            marginRight: e.style?.marginRight,
-            marginTop: e.style?.marginTop,
-            marginBottom: e.style?.marginBottom,
-            flex: e.style?.flex,
+            /*             backgroundColor: e.props?.style?.backgroundColor,
+            width: e.props?.style?.width,
+            height: e.props?.style?.height,
+            flexDirection: e.props?.style?.flexDirection,
+            alignItems: e.props?.style?.alignItems,
+            alignSelf: e.props?.style?.alignSelf,
+            justifyContent: e.props?.style?.justifyContent,
+            borderRadius: e.props?.style?.borderRadius,
+            marginLeft: e.props?.style?.marginLeft,
+            marginRight: e.props?.style?.marginRight,
+            marginTop: e.props?.style?.marginTop,
+            marginBottom: e.props?.style?.marginBottom,
+            flex: e.props?.style?.flex, */
             position: "relative",
+            ...e.props?.style,
           }}
         >
           <div
@@ -128,7 +209,20 @@ function Component(props: {
                 setActiveElementID(e.id);
               }
             }}
-          />
+          >
+            {/*   <div
+              style={{
+                borderRadius: "50%",
+                width: 10,
+                height: 10,
+                background: "blue",
+                top: -3,
+                left: -3,
+                position: "absolute",
+                border: "5px solid #4286f4;",
+              }}
+            ></div> */}
+          </div>
           {
             e.children
               ? e.children.map((a, i) => (
@@ -152,22 +246,23 @@ function Component(props: {
           // setRefs();
         }}
         style={{
-          backgroundColor: e.style?.backgroundColor,
-          width: e.style?.width,
-          height: e.style?.height,
-          flexDirection: e.style?.flexDirection,
-          alignItems: e.style?.alignItems,
-          alignSelf: e.style?.alignSelf,
-          justifyContent: e.style?.justifyContent,
-          borderRadius: e.style?.borderRadius,
-          marginLeft: e.style?.marginLeft,
-          marginRight: e.style?.marginRight,
-          marginTop: e.style?.marginTop,
-          marginBottom: e.style?.marginBottom,
-          color: e.style?.color,
-          fontSize: e.style?.fontSize,
-          flex: e.style?.flex,
+          /*         backgroundColor: e.props?.style?.backgroundColor,
+          width: e.props?.style?.width,
+          height: e.props?.style?.height,
+          flexDirection: e.props?.style?.flexDirection,
+          alignItems: e.props?.style?.alignItems,
+          alignSelf: e.props?.style?.alignSelf,
+          justifyContent: e.props?.style?.justifyContent,
+          borderRadius: e.props?.style?.borderRadius,
+          marginLeft: e.props?.style?.marginLeft,
+          marginRight: e.props?.style?.marginRight,
+          marginTop: e.props?.style?.marginTop,
+          marginBottom: e.props?.style?.marginBottom,
+          color: e.props?.style?.color,
+          fontSize: e.props?.style?.fontSize,
+          flex: e.props?.style?.flex, */
           position: "relative",
+          ...e.props?.style,
         }}
       >
         <div
@@ -203,19 +298,20 @@ function Component(props: {
           }}
           source={{ uri: e.props?.source || "" }}
           style={{
-            backgroundColor: e.style?.backgroundColor,
-            width: e.style?.width,
-            height: e.style?.height,
-            flexDirection: e.style?.flexDirection,
-            alignItems: e.style?.alignItems,
-            justifyContent: e.style?.justifyContent,
-            borderRadius: e.style?.borderRadius,
-            marginLeft: e.style?.marginLeft,
-            marginRight: e.style?.marginRight,
-            marginTop: e.style?.marginTop,
-            marginBottom: e.style?.marginBottom,
-            flex: e.style?.flex,
+            /*           backgroundColor: e.props?.style?.backgroundColor,
+            width: e.props?.style?.width,
+            height: e.props?.style?.height,
+            flexDirection: e.props?.style?.flexDirection,
+            alignItems: e.props?.style?.alignItems,
+            justifyContent: e.props?.style?.justifyContent,
+            borderRadius: e.props?.style?.borderRadius,
+            marginLeft: e.props?.style?.marginLeft,
+            marginRight: e.props?.style?.marginRight,
+            marginTop: e.props?.style?.marginTop,
+            marginBottom: e.props?.style?.marginBottom,
+            flex: e.props?.style?.flex, */
             position: "relative",
+            ...e.props?.style,
           }}
         >
           {/*   <div
