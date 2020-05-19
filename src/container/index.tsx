@@ -29,7 +29,7 @@ export function Container() {
   const [activeElementId, setActiveElementID] = useRecoilState(
     activeElementIDState
   );
-  const [zoom, setZoom] = React.useState(0.8);
+  const [zoom, setZoom] = React.useState(80);
   const [dimensions, setDimensions] = React.useState({
     width: 375,
     height: 812,
@@ -65,9 +65,9 @@ export function Container() {
     });
   };
   React.useEffect(() => {
-    setZoom(Math.round((window.innerHeight / dimensions.height) * 90) / 100);
+    setZoom(Math.round((window.innerHeight / dimensions.height) * 90));
     const listener = () => {
-      setZoom(Math.round((window.innerHeight / dimensions.height) * 90) / 100);
+      setZoom(Math.round((window.innerHeight / dimensions.height) * 90));
     };
     window.addEventListener("resize", listener);
     return () => {
@@ -166,14 +166,14 @@ export function Container() {
         <input
           style={{ marginLeft: 12 }}
           type={"number"}
-          value={zoom * 100}
-          defaultValue={zoom * 100}
+          value={zoom}
+          defaultValue={zoom}
           onChange={(event) => {
             let val = Math.round(parseInt(event.target.value));
             if (val > 200) {
               val = 200;
             }
-            setZoom(val / 100);
+            setZoom(val);
           }}
         />
         <button
@@ -201,7 +201,7 @@ export function Container() {
               height: devices[i].height,
               width: devices[i].width,
             });
-            setZoom((window.innerHeight / devices[i].height) * 0.9);
+            setZoom(Math.round((window.innerHeight / devices[i].height) * 90));
           }}
           defaultValue={1}
         >
@@ -249,7 +249,7 @@ export function Container() {
             }
           }
         >
-          <Device zoom={zoom} dimensions={dimensions} />
+          <Device zoom={zoom / 100} dimensions={dimensions} />
         </div>
         {/*   </div> */}
       </div>
