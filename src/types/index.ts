@@ -34,23 +34,23 @@ export interface StudioElement {
   component: "View" | "Text" | "Image";
   props?: {
     source?: string;
-  };
-  style?: {
-    flex?: number | undefined;
-    width?: number | string;
-    height?: number | string;
-    backgroundColor?: string;
-    flexDirection?: StyleFlexDirection;
-    alignItems?: StyleAlignItems;
-    justifyContent?: StyleJustifyContent;
-    alignSelf?: StyleAlignSelf;
-    borderRadius?: number;
-    marginLeft?: number;
-    marginRight?: number;
-    marginTop?: number;
-    marginBottom?: number;
-    color?: string;
-    fontSize?: number;
+    style?: {
+      flex?: number | undefined;
+      width?: number | string;
+      height?: number | string;
+      backgroundColor?: string;
+      flexDirection?: StyleFlexDirection;
+      alignItems?: StyleAlignItems;
+      justifyContent?: StyleJustifyContent;
+      alignSelf?: StyleAlignSelf;
+      borderRadius?: number;
+      marginLeft?: number;
+      marginRight?: number;
+      marginTop?: number;
+      marginBottom?: number;
+      color?: string;
+      fontSize?: number;
+    };
   };
   children?: string[];
 }

@@ -37,14 +37,14 @@ export function ImageEditor() {
       />
       <FieldEditor
         title="Flex"
-        field="style.flex"
+        field="props.style.flex"
         type="string"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Flex Direction"
-        field="style.flexDirection"
+        field="props.style.flexDirection"
         type="select"
         values={Object.keys(StyleFlexDirection)}
         activeElement={activeElement}
@@ -52,7 +52,7 @@ export function ImageEditor() {
       />
       <FieldEditor
         title="Align Items"
-        field="style.alignItems"
+        field="props.style.alignItems"
         type="select"
         values={Object.keys(StyleAlignItems)}
         activeElement={activeElement}
@@ -60,7 +60,7 @@ export function ImageEditor() {
       />
       <FieldEditor
         title="Justify Content"
-        field="style.justifyContent"
+        field="props.style.justifyContent"
         type="select"
         values={Object.keys(StyleJustifyContent)}
         activeElement={activeElement}
@@ -68,7 +68,7 @@ export function ImageEditor() {
       />
       <FieldEditor
         title="Align Self"
-        field="style.alignSelf"
+        field="props.style.alignSelf"
         type="select"
         values={Object.keys(StyleAlignSelf)}
         activeElement={activeElement}
@@ -76,21 +76,21 @@ export function ImageEditor() {
       />
       <FieldEditor
         title="Border Radius"
-        field="style.borderRadius"
+        field="props.style.borderRadius"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Background Color"
-        field="style.backgroundColor"
+        field="props.style.backgroundColor"
         type="string"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Width"
-        field="style.width"
+        field="props.style.width"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
@@ -98,35 +98,35 @@ export function ImageEditor() {
 
       <FieldEditor
         title="Height"
-        field="style.height"
+        field="props.style.height"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="MarginLeft"
-        field="style.marginLeft"
+        field="props.style.marginLeft"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Margin Right"
-        field="style.marginRight"
+        field="props.style.marginRight"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Margin Top"
-        field="style.marginTop"
+        field="props.style.marginTop"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Margin Bottom"
-        field="style.marginBottom"
+        field="props.style.marginBottom"
         type="number"
         activeElement={activeElement}
         setElements={setElements}

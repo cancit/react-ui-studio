@@ -11,9 +11,11 @@ export const elementsState = atom({
       component: "View",
       id: "root",
       name: "Root",
-      style: {
-        flex: 1,
-        height: "100%",
+      props: {
+        style: {
+          flex: 1,
+          height: "100%",
+        },
       },
     },
   } as StudioElementMap,

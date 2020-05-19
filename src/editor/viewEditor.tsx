@@ -31,14 +31,14 @@ export function ViewEditor() {
       />
       <FieldEditor
         title="Flex"
-        field="style.flex"
+        field="props.style.flex"
         type="string"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Flex Direction"
-        field="style.flexDirection"
+        field="props.style.flexDirection"
         type="select"
         values={Object.keys(StyleFlexDirection)}
         activeElement={activeElement}
@@ -46,7 +46,7 @@ export function ViewEditor() {
       />
       <FieldEditor
         title="Align Items"
-        field="style.alignItems"
+        field="props.style.alignItems"
         type="select"
         values={Object.keys(StyleAlignItems)}
         activeElement={activeElement}
@@ -54,7 +54,7 @@ export function ViewEditor() {
       />
       <FieldEditor
         title="Justify Content"
-        field="style.justifyContent"
+        field="props.style.justifyContent"
         type="select"
         values={Object.keys(StyleJustifyContent)}
         activeElement={activeElement}
@@ -62,7 +62,7 @@ export function ViewEditor() {
       />
       <FieldEditor
         title="Align Self"
-        field="style.alignSelf"
+        field="props.style.alignSelf"
         type="select"
         values={Object.keys(StyleAlignSelf)}
         activeElement={activeElement}
@@ -70,14 +70,14 @@ export function ViewEditor() {
       />
       <FieldEditor
         title="Border Radius"
-        field="style.borderRadius"
+        field="props.style.borderRadius"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Background Color"
-        field="style.backgroundColor"
+        field="props.style.backgroundColor"
         type="string"
         activeElement={activeElement}
         setElements={setElements}
@@ -85,7 +85,7 @@ export function ViewEditor() {
       <div>
         <FieldEditor
           title="Width"
-          field="style.width"
+          field="props.style.width"
           type="number"
           activeElement={activeElement}
           setElements={setElements}
@@ -95,7 +95,7 @@ export function ViewEditor() {
             setElements((elements: any) => {
               const elems = _.cloneDeep(elements);
               const old = elems[activeElement.id];
-              _.set(old, "style.width", undefined);
+              _.set(old, "props.style.width", undefined);
               elems[activeElement.id] = old;
               return elems;
             });
@@ -107,7 +107,7 @@ export function ViewEditor() {
       <div>
         <FieldEditor
           title="Height"
-          field="style.height"
+          field="props.style.height"
           type="number"
           activeElement={activeElement}
           setElements={setElements}
@@ -117,7 +117,7 @@ export function ViewEditor() {
             setElements((elements: any) => {
               const elems = _.cloneDeep(elements);
               const old = elems[activeElement.id];
-              _.set(old, "style.height", undefined);
+              _.set(old, "props.style.height", undefined);
               elems[activeElement.id] = old;
               return elems;
             });
@@ -128,32 +128,52 @@ export function ViewEditor() {
       </div>
       <FieldEditor
         title="MarginLeft"
-        field="style.marginLeft"
+        field="props.style.marginLeft"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Margin Right"
-        field="style.marginRight"
+        field="props.style.marginRight"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Margin Top"
-        field="style.marginTop"
+        field="props.style.marginTop"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
       <FieldEditor
         title="Margin Bottom"
-        field="style.marginBottom"
+        field="props.style.marginBottom"
         type="number"
         activeElement={activeElement}
         setElements={setElements}
       />
+      <FieldEditor
+        title="Max Width"
+        field="props.style.maxWidth"
+        type="number"
+        activeElement={activeElement}
+        setElements={setElements}
+      />
+      <button
+        onClick={() => {
+          setElements((elements: any) => {
+            const elems = _.cloneDeep(elements);
+            const old = elems[activeElement.id];
+            _.set(old, "props.style.maxWidth", undefined);
+            elems[activeElement.id] = old;
+            return elems;
+          });
+        }}
+      >
+        -
+      </button>
       <button
         style={{ alignSelf: "flex-start", marginTop: 24 }}
         onClick={() => {
