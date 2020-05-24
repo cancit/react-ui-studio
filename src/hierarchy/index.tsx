@@ -10,7 +10,7 @@ export function Hierarchy() {
   );
   return (
     <div style={{ padding: 8, display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      {/* <div style={{ display: "flex", flexDirection: "row" }}>
         <span style={{ marginBottom: 4, flex: 1 }}>Hierarchy</span>
         <button
           onClick={() => {
@@ -35,6 +35,7 @@ export function Hierarchy() {
           save
         </button>
       </div>
+      */}
       <div
         style={{
           width: "100%",

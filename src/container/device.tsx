@@ -1,6 +1,11 @@
 import * as React from "react";
 import { useRecoilState } from "recoil";
-import { activeElementIDState, elementsState, refStore } from "../atoms";
+import {
+  activeElementIDState,
+  elementsState,
+  refStore,
+  customComponentState,
+} from "../atoms";
 import { StudioElement, StudioElementMap } from "../types";
 import { View, Text, Image } from "react-native";
 import _ from "lodash";
@@ -169,6 +174,11 @@ function Component(props: {
   const [activeElementId, setActiveElementID] = useRecoilState(
     activeElementIDState
   );
+  const [customComponents] = useRecoilState(customComponentState);
+  if (e.custom) {
+    const Custom = customComponents[e.id];
+    return <Custom {...e.props} />;
+  }
   if (e.component === "View") {
     return (
       <>
@@ -177,6 +187,7 @@ function Component(props: {
             _refs[e.id] = r;
             // setRefs();
           }}
+          {...{ id: e.id }}
           style={{
             /*             backgroundColor: e.props?.style?.backgroundColor,
             width: e.props?.style?.width,

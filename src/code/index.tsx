@@ -3,6 +3,16 @@ import { elementsState } from "../atoms";
 import { useRecoilState } from "recoil";
 import { StudioElementMap, StudioElement } from "../types";
 import { uuidv4 } from "../util";
+import * as ReactNative from "react-native";
+
+(window as any).React = React as any;
+(window as any)["reactNative"] = ReactNative;
+// reactNative.render(react.createElement("div",{style:{color:"red"}},"Test"),document.getElementById("root"));
+(window as any).View = ReactNative.View;
+(window as any).Text = ReactNative.Text;
+(window as any).TouchableOpacity = ReactNative.TouchableOpacity;
+
+(window as any).exports = {};
 export function CodeEditor() {
   const [code, setCode] = React.useState("");
   const [elements, setElements] = useRecoilState(elementsState);
@@ -18,6 +28,26 @@ export function CodeEditor() {
         }}
         style={{ display: "flex" }}
       />
+      <button
+        onClick={() => {
+          const requires = {
+            react: require("react"),
+            "react-native": require("react-native"),
+          };
+          (window as any).requires = requires;
+          const res = eval(
+            `function require(name){return window.requires[name]}` +
+              code +
+              "(()=>{return(exports)})()"
+          );
+          /*  const func = new Function()
+          func() */
+          console.log(res.default);
+          // (window as any).Welcome = res;
+        }}
+      >
+        Render
+      </button>
       <button
         onClick={() => {
           const refactorCode = code.replace(

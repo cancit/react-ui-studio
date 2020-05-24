@@ -31,6 +31,7 @@ export interface StudioElement {
   id: string;
   name?: string;
   text?: string;
+  custom?: boolean;
   component: "View" | "Text" | "Image";
   props?: {
     source?: string;

@@ -2,7 +2,12 @@ import * as React from "react";
 import { Device } from "./device";
 import { uuidv4 } from "../util";
 import { useRecoilState } from "recoil";
-import { activeElementIDState, elementsState } from "../atoms";
+import {
+  activeElementIDState,
+  elementsState,
+  zoomState,
+  deviceDimensionState,
+} from "../atoms";
 import _ from "lodash";
 import { StudioElement, StudioElementMap } from "../types";
 const devices = [
@@ -29,11 +34,8 @@ export function Container() {
   const [activeElementId, setActiveElementID] = useRecoilState(
     activeElementIDState
   );
-  const [zoom, setZoom] = React.useState(80);
-  const [dimensions, setDimensions] = React.useState({
-    width: 375,
-    height: 812,
-  });
+  const [zoom, setZoom] = useRecoilState(zoomState);
+  const [dimensions, setDimensions] = useRecoilState(deviceDimensionState);
   React.useEffect(() => {
     ws.onopen = () => {
       const message = "hello";
@@ -50,20 +52,7 @@ export function Container() {
       console.log(e.code, e.reason);
     };
   }, []);
-  const addElement = (newElement: StudioElement) => {
-    setElements((elements: StudioElementMap) => {
-      return {
-        ...elements,
-        [activeElementId]: {
-          ...elements[activeElementId],
-          children: [
-            ...(elements[activeElementId].children || []).concat(newElement.id),
-          ],
-        },
-        [newElement.id]: newElement,
-      };
-    });
-  };
+
   React.useEffect(() => {
     setZoom(Math.round((window.innerHeight / dimensions.height) * 90));
     const listener = () => {
@@ -75,7 +64,7 @@ export function Container() {
     };
   }, []);
   return (
-    <div
+    /*     <div
       style={{
         display: "flex",
         flexDirection: "column",
@@ -224,7 +213,18 @@ export function Container() {
         >
           Preview
         </button>
-      </div>
+      </div> */
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      }}
+    >
       <div
         style={{
           backgroundColor: "#424e5059",
@@ -241,13 +241,10 @@ export function Container() {
           style={{ transform: `scale(${zoom})`, paddingTop: 0, margin: "auto" }}
         > */}
         <div
-          style={
-            {
-              /*    width: dimensions.width * zoom,
-            height: dimensions.height * zoom,
-            margin: "auto", */
-            }
-          }
+          style={{
+            width: dimensions.width,
+            height: dimensions.height,
+          }}
         >
           <Device zoom={zoom / 100} dimensions={dimensions} />
         </div>
