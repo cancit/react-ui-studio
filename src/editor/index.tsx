@@ -12,6 +12,8 @@ import { TextEditor } from "./textEditor";
 import { ImageEditor } from "./imageEditor";
 import { StudioElement, StudioElementMap } from "../types";
 import MonacoEditor, { monaco, Monaco } from "@monaco-editor/react";
+import { Code } from "./code";
+import { TouchableOpacityEditor } from "./touchableOpacity";
 
 monaco
   .init()
@@ -76,67 +78,13 @@ export function Editor() {
             {activeElement?.component === "View" && <ViewEditor />}
             {activeElement?.component === "Text" && <TextEditor />}
             {activeElement?.component === "Image" && <ImageEditor />}
+            {activeElement?.component === "TouchableOpacity" && (
+              <TouchableOpacityEditor />
+            )}
           </div>
         </>
       )}
-      {tab === "code" && (
-        <MonacoEditor
-          options={{
-            formatOnType: true,
-            fontSize: 14,
-            lineNumbers: false,
-            minimap: {
-              enabled: false,
-            },
-          }}
-          editorDidMount={(getEditorValue, editor) => {
-            editorRef.current = editor;
-            setTimeout(() => {
-              editor.getAction("editor.action.formatDocument").run();
-            }, 10);
-          }}
-          language="javascript"
-          theme="dark"
-          value={`
-import * as React from \"react\"
-import {View} from \"react-native\"
- 
-export default function(){
-  return (
-    ${stringfyElements(activeElement, elements)})
-  }
- `}
-        />
-        /*  <textarea
-          key={JSON.stringify(activeElement)}
-          style={{ flex: 1, height: "100%" }}
-          defaultValue={`
-      import * as React from \"react\"
-      import {View} from \"react-native\"
-
-      export default function(){
-      return (
-        ${stringfyElements(activeElement, elements)})
-      }
-`}
-        /> */
-      )}
+      {tab === "code" && <Code />}
     </div>
   );
-}
-function stringfyElements(element: StudioElement, all: StudioElementMap) {
-  let str = "";
-  if (element.children && element.children?.length) {
-    str = `<${element.component} style={${JSON.stringify(
-      element.props?.style
-    )}}>
-       ${element.children.map((e) => stringfyElements(all[e], all)).join("\n")}
-         </${element.component}>
-`;
-  } else {
-    str = `   <${element.component} style={${JSON.stringify(
-      element.props?.style
-    )}}/>`;
-  }
-  return str;
 }

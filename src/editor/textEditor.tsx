@@ -125,11 +125,11 @@ export function TextEditor() {
       >
         Delete Component
       </button>
-      {
+      {/* 
         <span style={{ marginTop: 24 }}>
           {JSON.stringify(activeElement, null, 4)}
         </span>
-      }
+       */}
     </>
   );
 }

@@ -26,9 +26,7 @@ export const elementsState = atom({
 
 export const customComponentState = atom({
   key: "customComponentState",
-  default: {
-    root2: test,
-  } as { [key: string]: any },
+  default: {} as { [key: string]: any },
 });
 export const activeElementState = selector({
   key: "activeElementState",

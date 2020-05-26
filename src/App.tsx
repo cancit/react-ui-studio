@@ -4,7 +4,6 @@ import { Container } from "./container";
 import { Editor } from "./editor";
 import { Hierarchy } from "./hierarchy";
 import { RecoilRoot } from "recoil";
-import { CodeEditor } from "./code";
 import { TopBar } from "./topBar";
 import { colors } from "./constants/colors";
 
@@ -40,7 +39,7 @@ function App() {
             }}
           >
             <Hierarchy />
-            {<CodeEditor />}
+            {/* <CodeEditor /> */}
           </div>
           <div
             style={{

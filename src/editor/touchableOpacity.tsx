@@ -17,7 +17,7 @@ import { Dimensions } from "./sections/dimensions";
 import { Margins } from "./sections/margins";
 import { Paddings } from "./sections/paddings";
 
-export function ViewEditor() {
+export function TouchableOpacityEditor() {
   const [elements, setElements] = useRecoilState(elementsState);
   const [activeElementId, setActiveElementId] = useRecoilState(
     activeElementIDState
@@ -113,11 +113,11 @@ export function ViewEditor() {
       >
         Delete Component
       </button>
-      {/* 
+      {
         <span style={{ marginTop: 24 }}>
           {JSON.stringify(activeElement, null, 4)}
         </span>
-       */}
+      }
     </>
   );
 }

@@ -27,7 +27,6 @@ const devices = [
     height: 1024,
   },
 ];
-var ws = new WebSocket("ws://192.168.1.21:8080");
 
 export function Container() {
   const [elements, setElements] = useRecoilState(elementsState);
@@ -36,22 +35,6 @@ export function Container() {
   );
   const [zoom, setZoom] = useRecoilState(zoomState);
   const [dimensions, setDimensions] = useRecoilState(deviceDimensionState);
-  React.useEffect(() => {
-    ws.onopen = () => {
-      const message = "hello";
-      ws.send("web");
-      //   console.log(`Sent: ${message}`);
-    };
-    ws.onmessage = (e) => {
-      console.log(`Received: ${e.data}`);
-    };
-    ws.onerror = (e: any) => {
-      console.log(`Error: ${e.message}`);
-    };
-    ws.onclose = (e) => {
-      console.log(e.code, e.reason);
-    };
-  }, []);
 
   React.useEffect(() => {
     setZoom(Math.round((window.innerHeight / dimensions.height) * 90));

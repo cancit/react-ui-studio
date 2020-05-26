@@ -7,10 +7,13 @@ import {
   editorTabState,
   zoomState,
   deviceDimensionState,
+  customComponentState,
 } from "../atoms";
 import { useRecoilState } from "recoil";
 import { colors } from "../constants/colors";
 import { devices } from "../constants/devices";
+import { strToFunction } from "../editor/code/parser";
+import { RemotePreview } from "./remotePreview";
 export function TopBar(props: {}) {
   const [elements, setElements] = useRecoilState(elementsState);
   const [activeElementId, setActiveElementID] = useRecoilState(
@@ -19,14 +22,21 @@ export function TopBar(props: {}) {
   const [tab, setTab] = useRecoilState(editorTabState);
   const [zoom, setZoom] = useRecoilState(zoomState);
   const [dimensions, setDimensions] = useRecoilState(deviceDimensionState);
-  const addElement = (newElement: StudioElement) => {
+  const [customComponents, setCustomComponents] = useRecoilState(
+    customComponentState
+  );
+
+  const addElement = (newElement: StudioElement, parentId?: string) => {
+    if (!parentId) {
+      parentId = activeElementId;
+    }
     setElements((elements: StudioElementMap) => {
       return {
         ...elements,
-        [activeElementId]: {
-          ...elements[activeElementId],
+        [parentId!]: {
+          ...elements[parentId!],
           children: [
-            ...(elements[activeElementId].children || []).concat(newElement.id),
+            ...(elements[parentId!].children || []).concat(newElement.id),
           ],
         },
         [newElement.id]: newElement,
@@ -46,6 +56,65 @@ export function TopBar(props: {}) {
         }}
       >
         <button
+          style={{
+            backgroundColor: "black",
+            border: "none",
+            color: "white",
+            fontSize: 18,
+            borderRadius: 4,
+            display: "flex",
+            alignItems: "center",
+          }}
+          onClick={() => {
+            const savedElements = JSON.parse(
+              window.localStorage.getItem("savedElements") || ""
+            );
+            const savedCustomComponents = JSON.parse(
+              window.localStorage.getItem("savedCustomComponents") || "{}"
+            );
+            Object.keys(savedCustomComponents).forEach((s) => {
+              savedCustomComponents[s].func = strToFunction(
+                savedCustomComponents[s].code
+              );
+            });
+            setCustomComponents(savedCustomComponents);
+            console.log("savedCustomComponents", savedCustomComponents);
+            setElements(savedElements);
+          }}
+        >
+          <span className="material-icons">folder_open</span>
+        </button>
+        <button
+          style={{
+            marginLeft: 12,
+            backgroundColor: "black",
+            border: "none",
+            color: "white",
+            fontSize: 18,
+            borderRadius: 4,
+            display: "flex",
+            alignItems: "center",
+          }}
+          onClick={() => {
+            const customForSave = {} as any;
+            Object.keys(customComponents).forEach((c) => {
+              customForSave[c] = { ...customComponents[c], func: undefined };
+            });
+            window.localStorage.setItem(
+              "savedCustomComponents",
+              JSON.stringify(customForSave)
+            );
+            window.localStorage.setItem(
+              "savedElements",
+              JSON.stringify(elements)
+            );
+            console.log(customComponents);
+          }}
+        >
+          <span className="material-icons">save</span>
+        </button>
+
+        <button
           onClick={() => {
             const newElement = {
               component: "View",
@@ -57,6 +126,7 @@ export function TopBar(props: {}) {
             addElement(newElement);
           }}
           style={{
+            marginLeft: 12,
             backgroundColor: "black",
             border: "none",
             color: "white",
@@ -95,7 +165,6 @@ export function TopBar(props: {}) {
             const newElement = {
               component: "Image",
               id: uuidv4(),
-              text: "Text",
               props: {
                 style: { width: 100, height: 100 },
                 source:
@@ -119,17 +188,34 @@ export function TopBar(props: {}) {
         </button>
         <button
           onClick={() => {
-            const newElement = {
-              component: "Image",
+            const textElement = {
+              component: "Text",
+              text: "Button",
               id: uuidv4(),
-              text: "Text",
               props: {
-                style: { width: 100, height: 100 },
-                source:
-                  "https://media-exp1.licdn.com/dms/image/C4E03AQECzOkRLMF1Vg/profile-displayphoto-shrink_400_400/0?e=1594857600&v=beta&t=ACeq2JlNFJ3y7Nxu7ZHKcIhWzNTtHQnL_DBZW6Sw59c",
+                style: {
+                  marginTop: 8,
+                  marginBottom: 8,
+                  marginLeft: 24,
+                  marginRight: 24,
+                  textAlign: "center",
+                  color: "white",
+                },
+              },
+            } as StudioElement;
+            const newElement = {
+              component: "TouchableOpacity",
+              id: uuidv4(),
+              props: {
+                style: {
+                  width: 100,
+                  backgroundColor: "#00adfe",
+                  borderRadius: 6,
+                },
               },
             } as StudioElement;
             addElement(newElement);
+            addElement(textElement, newElement.id);
           }}
           style={{
             backgroundColor: "black",
@@ -142,9 +228,17 @@ export function TopBar(props: {}) {
             alignItems: "center",
           }}
         >
-          + Image
+          + Button
         </button>
-        <div style={{ display: "flex", flex: 1, justifyContent: "flex-end" }}>
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <RemotePreview />
           <span style={{ marginLeft: 12 }}>Zoom</span>
           {
             <input

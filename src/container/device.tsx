@@ -7,7 +7,7 @@ import {
   customComponentState,
 } from "../atoms";
 import { StudioElement, StudioElementMap } from "../types";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import _ from "lodash";
 const _refs = {} as any;
 export function Device(props: {
@@ -36,6 +36,8 @@ export function Device(props: {
           setPos({ x, y, w, h });
         }
       );
+    } else {
+      setPos({ x: 0, y: 0, w: 0, h: 0 });
     }
   }, [activeElementId, elements, props.dimensions, props.zoom]);
   const { width, height } = props.dimensions;
@@ -176,8 +178,42 @@ function Component(props: {
   );
   const [customComponents] = useRecoilState(customComponentState);
   if (e.custom) {
-    const Custom = customComponents[e.id];
-    return <Custom {...e.props} />;
+    const Custom = customComponents[e.id].func;
+    return (
+      <View
+        ref={(r) => {
+          _refs[e.id] = r;
+          // setRefs();
+        }}
+        {...{ id: e.id }}
+        style={{
+          flexDirection: e.props?.style?.flexDirection,
+          alignItems: e.props?.style?.alignItems,
+          justifyContent: e.props?.style?.justifyContent,
+          alignSelf: e.props?.style?.alignSelf,
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 9999,
+            pointerEvents: activeElementId === e.id ? "none" : "all",
+          }}
+          onMouseDown={() => {
+            console.log("onMouseMove");
+            if (activeElementId !== e.id) {
+              setActiveElementID(e.id);
+            }
+          }}
+        ></div>
+        {<Custom {...e.props} />}
+      </View>
+    );
   }
   if (e.component === "View") {
     return (
@@ -189,19 +225,6 @@ function Component(props: {
           }}
           {...{ id: e.id }}
           style={{
-            /*             backgroundColor: e.props?.style?.backgroundColor,
-            width: e.props?.style?.width,
-            height: e.props?.style?.height,
-            flexDirection: e.props?.style?.flexDirection,
-            alignItems: e.props?.style?.alignItems,
-            alignSelf: e.props?.style?.alignSelf,
-            justifyContent: e.props?.style?.justifyContent,
-            borderRadius: e.props?.style?.borderRadius,
-            marginLeft: e.props?.style?.marginLeft,
-            marginRight: e.props?.style?.marginRight,
-            marginTop: e.props?.style?.marginTop,
-            marginBottom: e.props?.style?.marginBottom,
-            flex: e.props?.style?.flex, */
             position: "relative",
             ...e.props?.style,
           }}
@@ -309,7 +332,7 @@ function Component(props: {
             flexDirection: e.props?.style?.flexDirection,
             alignItems: e.props?.style?.alignItems,
             justifyContent: e.props?.style?.justifyContent,
-            alignSelf: e.props?.style?.justifyContent,
+            alignSelf: e.props?.style?.alignSelf,
           }}
           onMouseDown={() => {
             console.log("onMouseMove");
@@ -324,23 +347,28 @@ function Component(props: {
             }}
             source={{ uri: e.props?.source || "" }}
             style={{
-              /*           backgroundColor: e.props?.style?.backgroundColor,
-            width: e.props?.style?.width,
-            height: e.props?.style?.height,
-            flexDirection: e.props?.style?.flexDirection,
-            alignItems: e.props?.style?.alignItems,
-            justifyContent: e.props?.style?.justifyContent,
-            borderRadius: e.props?.style?.borderRadius,
-            marginLeft: e.props?.style?.marginLeft,
-            marginRight: e.props?.style?.marginRight,
-            marginTop: e.props?.style?.marginTop,
-            marginBottom: e.props?.style?.marginBottom,
-            flex: e.props?.style?.flex, */
               position: "relative",
               ...e.props?.style,
             }}
-          >
-            {/*   <div
+          ></Image>
+        </div>
+      </>
+    );
+  } else if (e.component === "TouchableOpacity") {
+    return (
+      <>
+        <TouchableOpacity
+          ref={(r) => {
+            _refs[e.id] = r;
+            // setRefs();
+          }}
+          {...{ id: e.id }}
+          style={{
+            position: "relative",
+            ...e.props?.style,
+          }}
+        >
+          <div
             style={{
               position: "absolute",
               left: 0,
@@ -354,9 +382,13 @@ function Component(props: {
                 setActiveElementID(e.id);
               }
             }}
-          /> */}
-          </Image>
-        </div>
+          ></div>
+          {e.children
+            ? e.children.map((a, i) => (
+                <Component elementID={a} index={i} elements={props.elements} />
+              ))
+            : null}
+        </TouchableOpacity>
       </>
     );
   }
