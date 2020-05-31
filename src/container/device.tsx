@@ -7,7 +7,7 @@ import {
   customComponentState,
 } from "../atoms";
 import { StudioElement, StudioElementMap } from "../types";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import _ from "lodash";
 const _refs = {} as any;
 export function Device(props: {
@@ -389,6 +389,37 @@ function Component(props: {
               ))
             : null}
         </TouchableOpacity>
+      </>
+    );
+  } else if (e.component === "TextInput") {
+    return (
+      <>
+        <div
+          style={{
+            position: "relative",
+            flexDirection: e.props?.style?.flexDirection,
+            alignItems: e.props?.style?.alignItems,
+            justifyContent: e.props?.style?.justifyContent,
+            alignSelf: e.props?.style?.alignSelf,
+          }}
+          onMouseDown={() => {
+            console.log("onMouseMove");
+            if (activeElementId !== e.id) {
+              setActiveElementID(e.id);
+            }
+          }}
+        >
+          <TextInput
+            ref={(r) => {
+              _refs[e.id] = r;
+            }}
+            {...(e.props as any)}
+            //  value={e.props?.value}
+            style={{
+              ...e.props?.style,
+            }}
+          ></TextInput>
+        </div>
       </>
     );
   }

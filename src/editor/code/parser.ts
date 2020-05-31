@@ -1,4 +1,5 @@
-const Babel = require("babel-standalone");
+const Babel = require("@babel/standalone");
+(window as any).Babel2 = require("@babel/standalone");
 export function parseTransformedCode(transformedCode: string) {
   const requires = {
     react: require("react"),
@@ -14,7 +15,9 @@ export function parseTransformedCode(transformedCode: string) {
 }
 export function transformCode(code: string) {
   const transformed = Babel.transform(code, {
-    presets: ["es2015", "react"],
+    filename: "file.tsx",
+    presets: ["es2015", "react", "typescript"],
+    plugins: ["proposal-class-properties"],
   }).code;
   return transformed;
 }

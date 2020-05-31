@@ -32,9 +32,10 @@ export interface StudioElement {
   name?: string;
   text?: string;
   custom?: boolean;
-  component: "View" | "Text" | "Image" | "TouchableOpacity";
+  component: "View" | "Text" | "Image" | "TouchableOpacity" | "TextInput";
   props?: {
     source?: string;
+    value?: string | number;
     style?: {
       flex?: number | undefined;
       width?: number | string;

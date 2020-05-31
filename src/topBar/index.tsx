@@ -230,6 +230,38 @@ export function TopBar(props: {}) {
         >
           + Button
         </button>
+        <button
+          onClick={() => {
+            const newElement = {
+              component: "TextInput",
+              id: uuidv4(),
+              props: {
+                defaultValue: "Selam",
+                style: {
+                  borderBottomColor: "black",
+                  borderBottomWidth: 1,
+                  borderStyle: "solid",
+                  paddingBottom: 6,
+                  paddingLeft: 4,
+                  marginHorizontal: 12,
+                },
+              },
+            } as StudioElement;
+            addElement(newElement);
+          }}
+          style={{
+            backgroundColor: "black",
+            border: "none",
+            color: "white",
+            fontSize: 18,
+            borderRadius: 4,
+            marginLeft: 12,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          + TextInput
+        </button>
         <div
           style={{
             display: "flex",

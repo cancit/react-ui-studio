@@ -44,25 +44,29 @@ export function Code() {
     <div style={{ flex: 1 }}>
       <button
         onClick={() => {
-          const res = parseTransformedCode(transformedCode);
-          setCustomComponents((comps: any) => {
-            comps = {
-              ...comps,
-              [activeElement.id]: { func: res, code: code },
-            };
-            return comps;
-          });
-          setElements((elements: StudioElementMap) => {
-            elements = {
-              ...elements,
-              [activeElement.id]: {
-                ...elements[activeElement.id],
-                custom: true,
-              },
-            };
-            return elements;
-          });
-          // (window as any).Welcome = res;
+          try {
+            const res = parseTransformedCode(transformedCode);
+            setCustomComponents((comps: any) => {
+              comps = {
+                ...comps,
+                [activeElement.id]: { func: res, code: code },
+              };
+              return comps;
+            });
+            setElements((elements: StudioElementMap) => {
+              elements = {
+                ...elements,
+                [activeElement.id]: {
+                  ...elements[activeElement.id],
+                  custom: true,
+                },
+              };
+              return elements;
+            });
+            // (window as any).Welcome = res;
+          } catch (err) {
+            alert(err);
+          }
         }}
       >
         Save
