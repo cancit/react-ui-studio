@@ -7,8 +7,8 @@ export function RemotePreview() {
   const [elements] = useRecoilState(elementsState);
   const [customComponents] = useRecoilState(customComponentState);
 
-  React.useEffect(() => {
-    if (!ws) {
+   /*React.useEffect(() => {
+   if (!ws) {
       ws = new WebSocket("ws://192.168.1.192:8080");
     }
     ws.onopen = () => {
@@ -25,7 +25,7 @@ export function RemotePreview() {
     ws.onclose = (e) => {
       console.log(e.code, e.reason);
     };
-  }, []);
+  }, []); */
   return (
     <button
       style={{
@@ -43,7 +43,7 @@ export function RemotePreview() {
         Object.keys(customComponents).forEach((c) => {
           customForSave[c] = { ...customComponents[c], func: undefined };
         });
-        ws.send(
+        ws?.send(
           JSON.stringify({
             type: "ui",
             elements: elements,
