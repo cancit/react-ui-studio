@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b5355892a0663bce7e064b8d8a577a39",
+    "revision": "52dac347aa80082d9b7f69aa96d1773e",
     "url": "https://cancit.github.io/react-ui-studio/index.html"
   },
   {
-    "revision": "b9c8f0d36a4b90dda7f4",
+    "revision": "b61fd3da866c8730ffec",
     "url": "https://cancit.github.io/react-ui-studio/static/css/main.82aff961.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://cancit.github.io/react-ui-studio/static/js/2.535e1610.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "b9c8f0d36a4b90dda7f4",
-    "url": "https://cancit.github.io/react-ui-studio/static/js/main.2cdf565d.chunk.js"
+    "revision": "b61fd3da866c8730ffec",
+    "url": "https://cancit.github.io/react-ui-studio/static/js/main.bb84674b.chunk.js"
   },
   {
     "revision": "243356e7fa195fc0d668",
