@@ -1,4 +1,5 @@
 # React UI Studio
+> This is an experimental project, not ready to be used in production
 
 React UI Studio is an UI editor for React Native which works on the web by using react-native-web. It is possible to see the code in action on the editor or on a device with the companion app.
 
