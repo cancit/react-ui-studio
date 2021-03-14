@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "https://cancit.github.io/react-ui-studio/static/css/main.82aff961.chunk.css",
-    "main.js": "https://cancit.github.io/react-ui-studio/static/js/main.1f547537.chunk.js",
-    "main.js.map": "https://cancit.github.io/react-ui-studio/static/js/main.1f547537.chunk.js.map",
+    "main.js": "https://cancit.github.io/react-ui-studio/static/js/main.2cdf565d.chunk.js",
+    "main.js.map": "https://cancit.github.io/react-ui-studio/static/js/main.2cdf565d.chunk.js.map",
     "runtime-main.js": "https://cancit.github.io/react-ui-studio/static/js/runtime-main.7d09c922.js",
     "runtime-main.js.map": "https://cancit.github.io/react-ui-studio/static/js/runtime-main.7d09c922.js.map",
-    "static/js/2.9c1b8e77.chunk.js": "https://cancit.github.io/react-ui-studio/static/js/2.9c1b8e77.chunk.js",
-    "static/js/2.9c1b8e77.chunk.js.map": "https://cancit.github.io/react-ui-studio/static/js/2.9c1b8e77.chunk.js.map",
+    "static/js/2.535e1610.chunk.js": "https://cancit.github.io/react-ui-studio/static/js/2.535e1610.chunk.js",
+    "static/js/2.535e1610.chunk.js.map": "https://cancit.github.io/react-ui-studio/static/js/2.535e1610.chunk.js.map",
     "index.html": "https://cancit.github.io/react-ui-studio/index.html",
-    "precache-manifest.5813df6e2bc5d0567dd428abd56e7c61.js": "https://cancit.github.io/react-ui-studio/precache-manifest.5813df6e2bc5d0567dd428abd56e7c61.js",
+    "precache-manifest.7111c4e36f6b4dec9f5420915e7c2739.js": "https://cancit.github.io/react-ui-studio/precache-manifest.7111c4e36f6b4dec9f5420915e7c2739.js",
     "service-worker.js": "https://cancit.github.io/react-ui-studio/service-worker.js",
     "static/css/main.82aff961.chunk.css.map": "https://cancit.github.io/react-ui-studio/static/css/main.82aff961.chunk.css.map",
-    "static/js/2.9c1b8e77.chunk.js.LICENSE.txt": "https://cancit.github.io/react-ui-studio/static/js/2.9c1b8e77.chunk.js.LICENSE.txt"
+    "static/js/2.535e1610.chunk.js.LICENSE.txt": "https://cancit.github.io/react-ui-studio/static/js/2.535e1610.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7d09c922.js",
-    "static/js/2.9c1b8e77.chunk.js",
+    "static/js/2.535e1610.chunk.js",
     "static/css/main.82aff961.chunk.css",
-    "static/js/main.1f547537.chunk.js"
+    "static/js/main.2cdf565d.chunk.js"
   ]
 }
