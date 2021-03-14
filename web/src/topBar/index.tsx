@@ -14,6 +14,8 @@ import { colors } from "../constants/colors";
 import { devices } from "../constants/devices";
 import { strToFunction } from "../editor/code/parser";
 import { RemotePreview } from "./remotePreview";
+import hello_world from '../examples/hello_world.json'
+
 export function TopBar(props: {}) {
   const [elements, setElements] = useRecoilState(elementsState);
   const [activeElementId, setActiveElementID] = useRecoilState(
@@ -43,6 +45,21 @@ export function TopBar(props: {}) {
       };
     });
   };
+  
+  React.useEffect(()=>{
+    console.log("useEffect", 'savedCustomComponents');
+    const savedElements = hello_world.savedElements;
+    const savedCustomComponents = hello_world.savedCustomComponents as any;
+    Object.keys(savedCustomComponents).forEach((s) => {
+      savedCustomComponents[s].func = strToFunction(
+        savedCustomComponents[s].code
+      );
+    });
+    setCustomComponents(savedCustomComponents);
+    console.log("savedCustomComponents", savedCustomComponents);
+    setElements(savedElements);
+  },[])
+
   return (
     <div style={{ width: "100%" }}>
       <div

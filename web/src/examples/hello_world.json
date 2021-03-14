@@ -1,0 +1,123 @@
+{
+    "savedCustomComponents": {
+        "25655e68-4f3c-4c52-a91f-96afa0f159f3": {
+            "code": "import * as React from \"react\";\nimport {\n  View,\n  Text,\n  Animated,\n  TouchableOpacity,\n  StyleSheet,\n} from \"react-native\";\n\nexport default function (props) {\n  const opacity = React.useRef(new Animated.Value(0)).current;\n  const rotate = React.useRef(new Animated.Value(0)).current;\n\n  React.useEffect(() => {\n    animate();\n  }, []);\n  const animate = () => {\n    opacity.setValue(0);\n    Animated.timing(opacity, {\n      toValue: 1,\n      duration: 2000,\n      useNativeDriver: false,\n    }).start();\n  };\n  const rotateAnim = () => {\n    rotate.setValue(0);\n    Animated.timing(rotate, {\n      toValue: 1,\n      duration: 5000,\n      useNativeDriver: false,\n    }).start();\n  };\n  return (\n      <Animated.View style={[props.style]} >\n        <Animated.View\n          style={[\n            styles.box,\n            {\n              opacity: opacity,\n              transform: [\n                {\n                  rotate: rotate.interpolate({\n                    inputRange: [0, 1],\n                    outputRange: [\"0deg\", \"360deg\"],\n                  }),\n                },\n              ],\n            },\n          ]}\n        />\n        <TouchableOpacity style={styles.buttonFade} onPress={animate}>\n          <Text style={styles.buttonText}>{\"Fade!\"}</Text>\n        </TouchableOpacity>\n        <TouchableOpacity\n          style={styles.buttonFade}\n          onPress={rotateAnim}\n        >\n          <Text\n            style={styles.buttonText}\n          >\n            {\"Rotate!\"}\n          </Text>\n        </TouchableOpacity>\n      </Animated.View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  buttonText: {\n    color: \"white\",\n    margin: 16,\n    width: \"auto\",\n  },\n  buttonFade: {\n    borderRadius: 36,\n    margin: 24,\n    backgroundColor: \"#00adfe\",\n    alignSelf: \"center\",\n    alignItems: \"center\",\n  },\n  box: {\n    alignSelf: \"center\",\n    margin: 20,\n    width: 100,\n    height: 100,\n    backgroundColor: \"#00adfe\",\n  },\n});\n"
+        }
+    },
+    "savedElements": {
+        "root": {
+            "component": "View",
+            "id": "root",
+            "name": "Root",
+            "custom": false,
+            "props": {
+                "style": {
+                    "flex": 1,
+                    "height": "100%",
+                    "alignItems": "center",
+                    "justifyContent": "flex-start"
+                }
+            },
+            "children": [
+                "b545c333-6565-40b2-9c26-4e2c6b707640",
+                "00ed4e44-f20f-4eaa-9500-dca1fc7ff4d3",
+                "bf372b9b-575d-49e1-8e4f-5ee3929e6bb1",
+                "25655e68-4f3c-4c52-a91f-96afa0f159f3",
+                "04720cae-be11-4d2a-b7bd-b09d24655f0a"
+            ]
+        },
+        "25655e68-4f3c-4c52-a91f-96afa0f159f3": {
+            "component": "View",
+            "id": "25655e68-4f3c-4c52-a91f-96afa0f159f3",
+            "props": {
+                "style": {
+                    "backgroundColor": "",
+                    "flexDirection": "row",
+                    "flex": null
+                }
+            },
+            "custom": true,
+            "name": "CustomComponent"
+        },
+        "04720cae-be11-4d2a-b7bd-b09d24655f0a": {
+            "component": "Image",
+            "id": "04720cae-be11-4d2a-b7bd-b09d24655f0a",
+            "props": {
+                "style": {
+                    "width": 100,
+                    "height": 100,
+                    "marginTop": 24,
+                    "borderRadius": 48
+                },
+                "source": "https://media-exp1.licdn.com/dms/image/C4E03AQECzOkRLMF1Vg/profile-displayphoto-shrink_400_400/0/1516959158909?e=1621468800&v=beta&t=eXO1g9kCuvDMBt5_JzelGLkQpQcLNlydpqhWNc5cVfs"
+            }
+        },
+        "0d1eb5ff-a574-4974-8e1b-b646bdb1749b": {
+            "component": "Text",
+            "text": "Button",
+            "id": "0d1eb5ff-a574-4974-8e1b-b646bdb1749b",
+            "props": {
+                "style": {
+                    "marginTop": 8,
+                    "marginBottom": 8,
+                    "marginLeft": 24,
+                    "marginRight": 24,
+                    "color": "white"
+                }
+            }
+        },
+        "b545c333-6565-40b2-9c26-4e2c6b707640": {
+            "component": "View",
+            "id": "b545c333-6565-40b2-9c26-4e2c6b707640",
+            "props": {
+                "style": {
+                    "height": 56,
+                    "backgroundColor": "#ececec",
+                    "alignItems": "flex-start",
+                    "justifyContent": "center",
+                    "flex": null,
+                    "alignSelf": "stretch"
+                }
+            },
+            "children": [
+                "ee28d746-4bfd-41e8-94db-6a897f6d5c7d"
+            ],
+            "name": "Header"
+        },
+        "ee28d746-4bfd-41e8-94db-6a897f6d5c7d": {
+            "component": "Text",
+            "id": "ee28d746-4bfd-41e8-94db-6a897f6d5c7d",
+            "text": "React UI Studio",
+            "props": {
+                "style": {
+                    "fontSize": 24,
+                    "marginLeft": 24
+                }
+            }
+        },
+        "00ed4e44-f20f-4eaa-9500-dca1fc7ff4d3": {
+            "component": "Text",
+            "id": "00ed4e44-f20f-4eaa-9500-dca1fc7ff4d3",
+            "text": "React UI Studio is a web app that lets you develop react native UIs from a visual editor.",
+            "props": {
+                "style": {
+                    "marginTop": 24,
+                    "marginLeft": 24,
+                    "marginRight": 24
+                }
+            }
+        },
+        "bf372b9b-575d-49e1-8e4f-5ee3929e6bb1": {
+            "component": "Text",
+            "id": "bf372b9b-575d-49e1-8e4f-5ee3929e6bb1",
+            "text": "It is possible to write custom code too. Try clicking Fade and Rotate buttons",
+            "props": {
+                "style": {
+                    "marginTop": 24,
+                    "marginLeft": 24,
+                    "marginRight": 24
+                }
+            }
+        }
+    }
+}
