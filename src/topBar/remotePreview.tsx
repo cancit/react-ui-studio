@@ -9,7 +9,7 @@ export function RemotePreview() {
 
   React.useEffect(() => {
     if (!ws) {
-      ws = new WebSocket("ws://192.168.1.21:8080");
+      ws = new WebSocket("ws://192.168.1.192:8080");
     }
     ws.onopen = () => {
       const message = "hello";
