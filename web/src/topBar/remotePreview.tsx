@@ -7,9 +7,9 @@ export function RemotePreview() {
   const [elements] = useRecoilState(elementsState);
   const [customComponents] = useRecoilState(customComponentState);
 
-   /*React.useEffect(() => {
-   if (!ws) {
-      ws = new WebSocket("ws://192.168.1.192:8080");
+  React.useEffect(() => {
+    if (!ws) {
+      ws = new WebSocket("ws://192.168.1.137:8080");
     }
     ws.onopen = () => {
       const message = "hello";
@@ -25,7 +25,7 @@ export function RemotePreview() {
     ws.onclose = (e) => {
       console.log(e.code, e.reason);
     };
-  }, []); */
+  }, []);
   return (
     <button
       style={{

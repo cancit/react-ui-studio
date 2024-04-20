@@ -12,9 +12,9 @@ import {
 import { useRecoilState } from "recoil";
 import { colors } from "../constants/colors";
 import { devices } from "../constants/devices";
-import { strToFunction } from "../editor/code/parser";
+import { getChildren, strToFunction } from "../editor/code/parser";
 import { RemotePreview } from "./remotePreview";
-import hello_world from '../examples/hello_world.json'
+import hello_world from "../examples/hello_world.json";
 
 export function TopBar(props: {}) {
   const [elements, setElements] = useRecoilState(elementsState);
@@ -45,20 +45,30 @@ export function TopBar(props: {}) {
       };
     });
   };
-  
-  React.useEffect(()=>{
-    console.log("useEffect", 'savedCustomComponents');
-    const savedElements = hello_world.savedElements;
+
+  React.useEffect(() => {
+    console.log("useEffect", "savedCustomComponents");
+    let savedElements = hello_world.savedElements as any;
     const savedCustomComponents = hello_world.savedCustomComponents as any;
     Object.keys(savedCustomComponents).forEach((s) => {
       savedCustomComponents[s].func = strToFunction(
         savedCustomComponents[s].code
       );
+
+      const ch = getChildren(savedCustomComponents[s].code);
+      ch.forEach((element: any) => {
+        savedElements[element.id] = element;
+      });
+      // savedElements[ch[0].id] = ch[0];
+      //    savedElements = { ...savedElements, ...ch[0] };
+      savedElements[s].children = [ch[0].id];
     });
+
     setCustomComponents(savedCustomComponents);
     console.log("savedCustomComponents", savedCustomComponents);
+    console.log("savedElements", savedElements);
     setElements(savedElements);
-  },[])
+  }, []);
 
   return (
     <div style={{ width: "100%" }}>

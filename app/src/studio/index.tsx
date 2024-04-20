@@ -20,11 +20,6 @@ function Component(props: {
   customComponents: any;
 }) {
   const e = props.elements[props.elementID];
-  const mouse = {
-    onMouseMove: () => {
-      console.log('mouse move!');
-    },
-  };
   if (e.custom) {
     const Custom = props.customComponents[e.id].func;
     return <Custom {...e.props} />;

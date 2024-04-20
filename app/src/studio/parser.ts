@@ -5,17 +5,22 @@ export function parseTransformedCode(transformedCode: string) {
     'react-native': require('react-native'),
   };
   (window as any).requires = requires;
+  console.log('parseTransformedCode begin');
   const res = eval(
-    `function require(name){return window.requires[name]}` +
+    `let exports = {}
+    function require(name){return window.requires[name]}` +
       transformedCode +
       '(()=>{return(exports)})()',
   );
+  console.log('parseTransformedCode end');
+
   return res.default;
 }
 export function transformCode(code: string) {
   const transformed = Babel.transform(code, {
     presets: ['es2015', 'react'],
   }).code;
+  console.log('transformed', transformed);
   return transformed;
 }
 export function strToFunction(code: string) {

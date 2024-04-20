@@ -1,57 +1,79 @@
-# :space_invader: React Native Template TypeScript
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-<p>
-  <a href="https://travis-ci.org/react-native-community/react-native-template-typescript">
-    <img alt="Build Status" src="https://img.shields.io/travis/react-native-community/react-native-template-typescript.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/react-native-community/react-native-template-typescript#readme">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/react-native-community/react-native-template-typescript/graphs/commit-activity">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/react-native-community/react-native-template-typescript/blob/master/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
-  </a>
-</p>
+# Getting Started
 
-> Clean and minimalist React Native template for a quick start with TypeScript.
+>**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-## :star: Features
+## Step 1: Start the Metro Server
 
-- Elegant usage directly within the [React Native CLI](https://github.com/react-native-community/cli)
-- Consistent with the default React Native template
-- Minimal additional dependencies
+First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
-## :arrow_forward: Usage
+To start Metro, run the following command from the _root_ of your React Native project:
 
-### Note on the legacy CLI
-There seems to be quite some confusion about the legacy CLI. This template only works with the new CLI. Make sure you have uninstalled the legacy `react-native-cli` first (`npm uninstall -g react-native-cli`), for the below command to work. If you wish to not use `npx`, you can also install the new CLI globally (`npm i -g @react-native-community/cli` or `yarn global add @react-native-community/cli`).
+```bash
+# using npm
+npm start
 
-Further information can be found here: https://github.com/react-native-community/cli#about
-
-### `react-native@0.62.0` or higher
-
-```sh
-npx react-native init MyApp --template react-native-template-typescript
+# OR using Yarn
+yarn start
 ```
 
-### `react-native@0.61.x`
+## Step 2: Start your Application
 
-```sh
-npx react-native init MyApp --template react-native-template-typescript@6.3.16
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+
+### For Android
+
+```bash
+# using npm
+npm run android
+
+# OR using Yarn
+yarn android
 ```
 
-### `react-native@0.60.x`
+### For iOS
 
-```sh
-npx react-native init MyApp --template react-native-template-typescript@6.2.0
+```bash
+# using npm
+npm run ios
+
+# OR using Yarn
+yarn ios
 ```
 
-## :computer: Contributing
+If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-Contributions are very welcome. Please check out the [contributing document](CONTRIBUTING.md).
+This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## :bookmark: License
+## Step 3: Modifying your App
 
-This project is [MIT](LICENSE) licensed.
+Now that you have successfully run the app, let's modify it.
+
+1. Open `App.tsx` in your text editor of choice and edit some lines.
+2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+
+   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+
+## Congratulations! :tada:
+
+You've successfully run and modified your React Native App. :partying_face:
+
+### Now what?
+
+- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
+- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+
+# Troubleshooting
+
+If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+
+# Learn More
+
+To learn more about React Native, take a look at the following resources:
+
+- [React Native Website](https://reactnative.dev) - learn more about React Native.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
+- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.

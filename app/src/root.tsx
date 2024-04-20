@@ -7,21 +7,21 @@ export function Root() {
   const [customComponents, setCustomComponents] = React.useState(undefined);
 
   React.useEffect(() => {
-    var ws = new WebSocket('ws://192.168.1.192:8080');
+    var ws = new WebSocket('ws://192.168.1.137:8080');
     ws.onopen = () => {
-      const message = 'hello';
       ws.send('client');
     };
-    ws.onmessage = (e) => {
+    ws.onmessage = e => {
       console.log(`Received: ${e.data}`);
       try {
         const obj = JSON.parse(e.data) as any;
         if (obj.type === 'ui') {
-          const map = {};
-          Object.keys(obj.customComponents).forEach((cc) => {
+          const map: any = {};
+          Object.keys(obj.customComponents).forEach(cc => {
             map[cc] = obj.customComponents[cc];
             map[cc].func = strToFunction(obj.customComponents[cc].code);
           });
+
           setCustomComponents(map);
           setElements(obj.elements);
           console.log('elements set');
@@ -33,7 +33,7 @@ export function Root() {
     ws.onerror = (e: any) => {
       console.log(`Error: ${e.message}`);
     };
-    ws.onclose = (e) => {
+    ws.onclose = e => {
       console.log(e.code, e.reason);
     };
     return () => {

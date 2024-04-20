@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRecoilState } from "recoil";
 import { elementsState, activeElementIDState } from "../atoms";
 import { StudioElementMap } from "../types";
-import { TouchableOpacity, Text } from "react-native";
+
 export function Hierarchy() {
   const [elements, setElements] = useRecoilState(elementsState);
   const [activeElementId, setActiveElementID] = useRecoilState(

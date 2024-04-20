@@ -10,7 +10,7 @@ import {
 } from "../../atoms";
 import { StudioElement, StudioElementMap } from "../../types";
 import * as ReactNative from "react-native";
-import { parseTransformedCode, transformCode } from "./parser";
+import { getChildren, parseTransformedCode, transformCode } from "./parser";
 import { generateCode } from "./generator";
 
 (window as any).React = React as any;
